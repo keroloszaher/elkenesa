@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدخال البيانات الأساسية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+        .logo {
+    width: 100px; /* يمكنك تعديل الحجم حسب الحاجة */
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    margin: auto; /* لتوسيط اللوجو */
+}
+        body {
+            background-image: url(https://scontent.fcai19-11.fna.fbcdn.net/v/t39.30808-6/480525346_933978282118921_6498991417412467802_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=WYM74zHnSv8Q7kNvgHIFkve&_nc_oc=Adjip4DjvjYF2dOKrFchvu0R_I_QHSCSp5s7ofjsIwwYQekuiINDczKUQb99GVPAt7A&_nc_zt=23&_nc_ht=scontent.fcai19-11.fna&_nc_gid=A_fZERx7pGSU7I_xcYpIQ20&oh=00_AYBJSDhyKSqxCAjcJ5AhWlHihR6DEqcBOUP6Q-68qzVt5Q&oe=67C31E3A);
+            background-size: contain;
+            background-position: contain;
+            background-repeat: repeat;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: right;
+            direction: rtl;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1em;
+            outline: none;
+            text-align: right;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+
+        input.error {
+            border: 2px solid red;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        button:hover {
+            background: #2ecc71;
+            transform: scale(1.05);
+        }
+
+        .loading {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid white;
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .message {
+            display: none;
+            text-align: center;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .success {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .error {
+            background-color: #e74c3c;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>إدخال البيانات الأساسية</h2>
+        <img src="https://scontent.fcai19-11.fna.fbcdn.net/v/t39.30808-6/480507613_933351055514977_2225893162866100085_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=a5f93a&_nc_ohc=hLhoA4nR4aIQ7kNvgEuqdQ0&_nc_oc=AdiJqxniq9EsrehbShqhmhebALlwpaMLvrtMwO0EeoSW_Oxug_1UcSgdcd7_ecfrmVw&_nc_zt=23&_nc_ht=scontent.fcai19-11.fna&_nc_gid=AI2mK3FcfYSaHgQzlVP-Xcv&oh=00_AYDqSW2bkw-qA5hmRHDmFXUXNTVPkxOC7iAav2xyX1WYFA&oe=67C3116E " alt="logo"  class="logo" >
+        <form id="dataForm">
+            <label>الاسم:</label>
+            <input type="text" id="name" required>
+
+            <label>رقم التليفون:</label>
+            <input type="tel" id="phone" required>
+
+            <label>الرقم القومي:</label>
+            <input type="text" id="nationalId" maxlength="14" required>
+
+            <label>تاريخ الميلاد:</label>
+            <input type="date" id="dob" required>
+
+            <label>العنوان:</label>
+            <input type="text" id="address" required>
+
+            <button type="button" onclick="sendDataToGoogleSheet()">
+                <span>حفظ</span>
+                <div class="loading"></div>
+            </button>
+        </form>
+        <div id="messageBox" class="message"></div>
+    </div>
+
+    <script>
+        document.getElementById('nationalId').addEventListener('input', function () {
+            const nationalId = this.value;
+            if (nationalId.length === 14) {
+                const centuryCode = nationalId.charAt(0);
+                const year = nationalId.substr(1, 2);
+                const month = nationalId.substr(3, 2);
+                const day = nationalId.substr(5, 2);
+                let fullYear = (centuryCode === '2') ? `19${year}` : `20${year}`;
+                document.getElementById('dob').value = `${fullYear}-${month}-${day}`;
+            }
+        });
+
+        function sendDataToGoogleSheet() {
+            const url = "https://script.google.com/macros/s/AKfycbyD8VVKNvLnOp3uT16CXUC2Ukm0fq2fwqK7nbY-CnJx_XmvZ_2iRuXh0aIu0d3iaEzmxg/exec";
+
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const nationalId = document.getElementById('nationalId').value.trim();
+            const dob = document.getElementById('dob').value;
+            const address = document.getElementById('address').value.trim();
+            const messageBox = document.getElementById('messageBox');
+            const button = document.querySelector("button");
+            const loader = document.querySelector(".loading");
+
+            document.querySelectorAll("input").forEach(input => input.classList.remove("error"));
+
+            if (!name || !phone || !nationalId || !dob || !address) {
+                document.querySelectorAll("input").forEach(input => {
+                    if (!input.value.trim()) input.classList.add("error");
+                });
+                messageBox.textContent = "يرجى ملء جميع الحقول!";
+                messageBox.className = "message error";
+                messageBox.style.display = "block";
+                return;
+            }
+
+            loader.style.display = "inline-block";
+            button.disabled = true;
+
+            fetch(url, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, phone, nationalId, dob, address })
+            })
+            .then(() => {
+                messageBox.textContent = "تم إرسال البيانات بنجاح!";
+                messageBox.className = "message success";
+                messageBox.style.display = "block";
+                document.getElementById("dataForm").reset();
+            })
+            .catch(() => {
+                messageBox.textContent = "حدث خطأ أثناء الإرسال!";
+                messageBox.className = "message error";
+                messageBox.style.display = "block";
+            })
+            .finally(() => {
+                loader.style.display = "none";
+                button.disabled = false;
+            });
+        }
+    </script>
+</body>
+</html>
